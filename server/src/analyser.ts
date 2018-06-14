@@ -35,7 +35,8 @@ export default class Analyzer {
    */
   public static fromRoot(
     connection: LSP.Connection,
-    rootPath: string | null,
+    rootPath: string = null,
+    searchPattern: string = '**/*.sh',
   ): Promise<Analyzer> {
     // This happens if the users opens a single bash script without having the
     // 'window' associated with a specific project.
@@ -44,7 +45,7 @@ export default class Analyzer {
     }
 
     return new Promise((resolve, reject) => {
-      glob('**/*.sh', { cwd: rootPath }, (err, paths) => {
+      glob(searchPattern, { cwd: rootPath }, (err, paths) => {
         if (err != null) {
           reject(err)
         } else {
